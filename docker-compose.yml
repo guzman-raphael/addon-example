@@ -1,0 +1,16 @@
+# docker-compose -f LNX-docker-compose.yml --env-file LNX.env up --build --exit-code-from matlab
+version: '2.2'
+services:
+  app:
+    environment:
+    - DISPLAY
+    image: python:3.8-alpine3.11
+    working_dir: /src
+    volumes:
+      - .:/src
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    command: > 
+      sh -c "
+        tail -f /dev/null
+      "
+      

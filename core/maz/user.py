@@ -1,0 +1,3 @@
+
+def usr():
+    return 'root'
