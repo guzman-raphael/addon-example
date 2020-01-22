@@ -1,4 +1,3 @@
-
-
 from .message import msg
-from .user import usr
+from .user import show_usr
+from .version import __version__

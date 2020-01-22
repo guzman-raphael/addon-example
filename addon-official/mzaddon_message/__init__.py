@@ -1,4 +1,6 @@
+from .version import __version__
+from .certificate import __certificate__
 
+from .message import *
 
-def message():
-    print('hello')
+print('imported message!')

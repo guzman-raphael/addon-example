@@ -1,4 +1,5 @@
+from .version import __version__
 
+from .user import *
 
-def user():
-    print('user')
+print('imported user!')

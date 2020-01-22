@@ -4,13 +4,24 @@ services:
   app:
     environment:
     - DISPLAY
-    image: python:3.8-alpine3.11
+    image: python:3.7-alpine3.10
     working_dir: /src
     volumes:
       - .:/src
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
     command: > 
       sh -c "
-        tail -f /dev/null
+        # apk add gcc musl-dev libffi-dev openssl-dev;
+        # pip install --user twine;
+        tail -f /dev/null;
+        pypi_package.sh /src/core;
+        # pip install --user -i https://test.pypi.org/simple maz;
+        # pip uninstall -y maz;
+        pypi_package.sh /src/addon-unofficial;
+        # pip install --user -i https://test.pypi.org/simple mzaddon_user;
+        # pip uninstall -y mzaddon_user;
+        pypi_package.sh /src/addon-official;
+        # pip install --user -i https://test.pypi.org/simple mzaddon_message;
+        # pip uninstall -y mzaddon_message;
       "
       
