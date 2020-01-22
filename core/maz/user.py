@@ -1,5 +1,5 @@
 from .plugin import override_all, override_list
-addon_key = 'user'
+addon_key = 'plugins_user'
 
 # default methods that can be overwritten
 def usr():

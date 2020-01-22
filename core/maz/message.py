@@ -1,5 +1,5 @@
 from .plugin import override_all, override_list
-addon_key = 'message'
+addon_key = 'plugins_message'
 
 def msg():
     return 'hello there!'
