@@ -1,5 +1,5 @@
 from .plugin import override_all, override_list
-plugin_name = 'user'
+addon_key = 'user'
 
 # default methods that can be overwritten
 def usr():
@@ -9,8 +9,8 @@ def show_usr():
     return 'result: {}'.format(usr())
 
 # methods to override
-override_all(plugin_name, globals())
-# override_list(plugin_name, globals(), ['usr'])
+override_all(addon_key, globals())
+# override_list(addon_key, globals(), ['usr'])
 
 #safe
 def test():

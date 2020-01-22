@@ -1,7 +1,7 @@
 from .plugin import override_all, override_list
-plugin_name = 'message'
+addon_key = 'message'
 
 def msg():
     return 'hello there!'
 
-override_list(plugin_name, globals(), ['msg'])
+override_list(addon_key, globals(), ['msg'])

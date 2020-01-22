@@ -10,10 +10,10 @@ print(discovered_plugins)
 def verify_signature(module_name):
     return True
 
-def override_all(plugin_name, state):
-    if plugin_name in discovered_plugins:
+def override_all(addon_key, state):
+    if addon_key in discovered_plugins:
         # import
-        module_name = discovered_plugins[plugin_name]
+        module_name = discovered_plugins[addon_key]
         module = __import__(module_name)
         module_dict = module.__dict__
 
@@ -31,10 +31,10 @@ def override_all(plugin_name, state):
         # maybe?
         state.update(dict(__version__=module.__version__))
 
-def override_list(plugin_name, state, method_list):
-    if plugin_name in discovered_plugins:
+def override_list(addon_key, state, method_list):
+    if addon_key in discovered_plugins:
         # import
-        module_name = discovered_plugins[plugin_name]
+        module_name = discovered_plugins[addon_key]
         module = __import__(module_name)
         module_dict = module.__dict__
 
