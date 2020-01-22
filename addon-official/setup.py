@@ -1,5 +1,3 @@
-# name = "maz"
-
 import setuptools
 from os import path
 
