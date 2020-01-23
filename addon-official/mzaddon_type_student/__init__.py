@@ -1,6 +1,4 @@
-from .version import __version__
-from .certificate import __certificate__
-
+from .meta import *
 from .type import *
 
 print('imported type!')
