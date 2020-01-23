@@ -3,7 +3,10 @@ import maz
 
 print(maz.__version__)
 print(maz.show_usr())
-print(maz.msg())
+try:
+    print(str(maz.student1))
+except:
+    print('## `{}` not found ##'.format('student1'))
 
 print('-------------maz-user-------------')
 import maz.user as u
@@ -14,27 +17,34 @@ print(u.test())
 try:
     print(u.new())
 except:
-    print('## not found ##')
+    print('## `{}` not found ##'.format('new'))
 try:
     print(u.__version__)
 except:
-    print('## not found ##')
+    print('## `{}` not found ##'.format('__version__'))
 try:
     print(u.__certificate__)
 except:
-    print('## not found ##')
+    print('## `{}` not found ##'.format('__certificate__'))
 
 
 
 print('-------------maz_message-------------')
-import maz.message as m
+import maz.type as t
 
-print(m.msg())
 try:
-    print(m.__version__)
+    print(str(t.student1))
 except:
-    print('## not found ##')
+    print('## `{}` not found ##'.format('student1'))
 try:
-    print(m.__certificate__)
+    print(str(t.Student))
 except:
-    print('## not found ##')
+    print('## `{}` not found ##'.format('Student'))
+try:
+    print(t.__version__)
+except:
+    print('## `{}` not found ##'.format('__version__'))
+try:
+    print(t.__certificate__)
+except:
+    print('## `{}` not found ##'.format('__certificate__'))

@@ -21,7 +21,7 @@ services:
         # pip install --user -i https://test.pypi.org/simple mzaddon_user_raphael;
         # pip uninstall -y mzaddon_user_raphael;
         ./pypi_package.sh /src/addon-official;
-        # pip install --user -i https://test.pypi.org/simple mzaddon_message_datetime;
-        # pip uninstall -y mzaddon_message_datetime;
+        # pip install --user -i https://test.pypi.org/simple mzaddon_type_student;
+        # pip uninstall -y mzaddon_type_student;
       "
       
