@@ -6,7 +6,7 @@ pkg_name = "mzaddon_type_student"
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-with open(path.join(path.abspath(path.dirname(__file__)), pkg_name, 'version.py')) as f:
+with open(path.join(path.abspath(path.dirname(__file__)), pkg_name, 'meta.py')) as f:
     exec(f.read())
 
 setuptools.setup(

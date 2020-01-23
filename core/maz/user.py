@@ -1,4 +1,4 @@
-from .plugin import override_all, override_list
+from .plugin import override
 addon_type = 'user'
 
 # default methods that can be overwritten
@@ -9,8 +9,8 @@ def show_usr():
     return 'result: {}'.format(usr())
 
 # methods to override
-# override_all(addon_type, globals())
-override_list(addon_type, globals(), ['usr'])
+# override(addon_type, globals())
+override(addon_type, globals(), ['usr'])
 
 #safe
 def test():

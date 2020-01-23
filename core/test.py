@@ -8,7 +8,7 @@ try:
 except:
     print('## `{}` not found ##'.format('student1'))
 
-print('-------------maz-user-------------')
+print('-------------maz_user-------------')
 import maz.user as u
 
 print(u.usr())
@@ -29,7 +29,7 @@ except:
 
 
 
-print('-------------maz_message-------------')
+print('-------------maz_type-------------')
 import maz.type as t
 
 try:

@@ -17,17 +17,17 @@ services:
         # for signing with gpg
         # apk add gnupg;
         # gpg --import datajoint-dev.private.key;
-        # for manual signing dev (not applicable)
+        # for manual signing dev (necessary)
         apk add openssl git
         tail -f /dev/null;
         ./pypi_package.sh /src/core;
-        # pip install --user -i https://test.pypi.org/simple maz;
+        # pip install --upgrade --user -i https://test.pypi.org/simple maz;
         # pip uninstall -y maz;
         ./pypi_package.sh /src/addon-unofficial;
-        # pip install --user -i https://test.pypi.org/simple mzaddon_user_raphael;
+        # pip install --upgrade --user -i https://test.pypi.org/simple mzaddon_user_raphael;
         # pip uninstall -y mzaddon_user_raphael;
         ./pypi_package.sh /src/addon-official;
-        # pip install --user -i https://test.pypi.org/simple mzaddon_type_student;
+        # pip install --upgrade --user -i https://test.pypi.org/simple mzaddon_type_student;
         # pip uninstall -y mzaddon_type_student;
       "
       

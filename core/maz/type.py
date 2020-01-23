@@ -1,4 +1,4 @@
-from .plugin import override_all, override_list
+from .plugin import override
 addon_type = 'type'
 
-override_all(addon_type, globals())
+override(addon_type, globals())
