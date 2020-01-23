@@ -6,6 +6,6 @@ class Student:
         self.enrolled = enrolled
 
     def __str__(self):
-        return str(self.__dict__)s
+        return str(self.__dict__)
 
 student1 = Student('Raphael', 'Guzman', '2020-01-23')
