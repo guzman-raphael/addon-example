@@ -1,8 +1,8 @@
 import pkg_resources
 import hashlib
 from pathlib import Path
-import os
-from stat import ST_MODE
+# import os
+# from stat import ST_MODE
 from cryptography.exceptions import InvalidSignature
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.serialization import load_pem_public_key
@@ -32,23 +32,28 @@ def hash_dir(dirpath):
     details = ''
     # walk a directory to collect info
     for path in paths:
-        with open(str(path), 'r') as f:
-            data = f.read()
-            # mode = oct(os.stat(str(path))[ST_MODE])[2:]
-            mode = 100644
-            hash = hashlib.sha1('blob {}\0{}'.format(len(data),data).encode()).hexdigest()
-            stage_no = 0
-            relative_path = str(path.relative_to(ref))
-            details = '{}{} {} {}\t{}\n'.format(details, mode, hash, stage_no, relative_path)
+        if 'pycache' not in str(path):
+            with open(str(path), 'r') as f:
+                data = f.read()
+                # mode = oct(os.stat(str(path))[ST_MODE])[2:]
+                mode = 100644
+                hash = hashlib.sha1('blob {}\0{}'.format(len(data),data).encode()).hexdigest()
+                stage_no = 0
+                relative_path = str(path.relative_to(ref))
+                details = '{}{} {} {}\t{}\n'.format(details, mode, hash, stage_no, relative_path)
     return hashlib.sha1('blob {}\0{}'.format(len(details), details).encode()).hexdigest()
 
 def update_error_stack(module):
-    pub_key = load_pem_public_key(bytes(DJ_PUB_KEY, 'UTF-8'), backend=default_backend())
+    module_cert = '/root/.local/lib/python3.7/site-packages/mzaddon_type_student_data/mzaddon_type_student.sig'
     try:
-        signature = base64.b64decode(module.__certificate__.encode())
-        data = module.__githash__.encode()
+        with open(module_cert, 'r') as f:
+            sig = f.read()
+        signature = base64.b64decode(sig.encode())
+        pub_key = load_pem_public_key(bytes(DJ_PUB_KEY, 'UTF-8'), backend=default_backend())
+        data = hash_dir(module.__path__[0]).encode()
         pub_key.verify(signature, data, padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH), hashes.SHA256())
-    except (AttributeError, InvalidSignature):
+        print('Cert verified.')
+    except (FileNotFoundError, InvalidSignature):
         print('Error stack updated.')
 
 

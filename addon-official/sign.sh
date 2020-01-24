@@ -34,7 +34,7 @@ GIT_HASH=$(git ls-files -s mzaddon_type_student | git hash-object --stdin)
 
 # generate signature
 printf $GIT_HASH | openssl dgst -sha256 -sign datajoint-dev.pem -out mzaddon_type_student.sigbin -sigopt rsa_padding_mode:pss
-openssl enc -base64 -in mzaddon_type_student.sigbin -out data_files/mzaddon_type_student.sig
+openssl enc -base64 -in mzaddon_type_student.sigbin -out mzaddon_type_student_data/mzaddon_type_student.sig
 rm mzaddon_type_student.sigbin
 
 # verify signature
