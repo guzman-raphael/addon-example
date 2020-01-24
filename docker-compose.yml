@@ -4,21 +4,18 @@ services:
   app:
     environment:
     - DISPLAY
-    image: python:3.7-alpine3.10
+    image: raphaelguzman/pipuploader:v0.1
+    build:
+      context: .
     working_dir: /src
     volumes:
       - .:/src
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
     command: > 
       sh -c "
-        # for packaging to PyPi (last one for signing with gpg)
-        apk add gcc musl-dev libffi-dev openssl-dev;
-        pip install --user twine;
         # for signing with gpg
         # apk add gnupg;
         # gpg --import datajoint-dev.private.key;
-        # for manual signing dev (necessary)
-        apk add openssl git
         tail -f /dev/null;
         ./pypi_package.sh /src/core;
         # pip install --upgrade --user -i https://test.pypi.org/simple maz;

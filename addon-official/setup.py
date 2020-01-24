@@ -20,6 +20,7 @@ setuptools.setup(
     url="https://github.com/guzman-raphael/addon-example",
     packages=setuptools.find_packages(),
     entry_points={'maz.plugins': 'type = {}'.format(pkg_name)},
+    package_data={pkg_name: ['../{pkg}_data/{pkg}.sig'.format(pkg=pkg_name)]},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
