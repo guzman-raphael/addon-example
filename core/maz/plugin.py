@@ -11,6 +11,7 @@ from cryptography.hazmat.primitives import hashes
 import base64
 import re
 import json
+from json.decoder import JSONDecodeError
 
 DJ_PUB_KEY = '''
 -----BEGIN PUBLIC KEY-----
@@ -47,26 +48,23 @@ def hash_dir(dirpath):
 
 def update_error_stack(module):
     
-    
-
-    
-    module_cert = '/root/.local/lib/python3.7/site-packages/mzaddon_type_student_data/mzaddon_type_student.sig'
     try:
-        with open(module_cert, 'r') as f:
-            signature = f.read()
+        pkg = pkg_resources.get_distribution(module.__name__)
 
-        # File approach
+        # # File approach
+        # module_cert = Path(pkg.egg_info, '{}.sig'.format(module.__name__))
+        # with open(module_cert, 'r') as f:
+        #     signature = f.read()
 
-        # license approach
-        # pkg = pkg_resources.get_distribution(module.__name__)
-        # metadata = dict(re.findall(r'([a-zA-Z0-9\-]+): (.*?)\n', pkg.get_metadata(pkg.PKG_INFO)))
-        # signature = json.loads(metadata['License'])['certificate']
+        # License approach
+        metadata = dict(re.findall(r'([a-zA-Z0-9\-]+): (.*?)\n', pkg.get_metadata(pkg.PKG_INFO)))
+        signature = json.loads(metadata['License'])['certificate']
 
         pub_key = load_pem_public_key(bytes(DJ_PUB_KEY, 'UTF-8'), backend=default_backend())
         data = hash_dir(module.__path__[0])
         pub_key.verify(base64.b64decode(signature.encode()), data.encode(), padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH), hashes.SHA256())
         print('Cert verified.')
-    except (FileNotFoundError, InvalidSignature):
+    except (FileNotFoundError, JSONDecodeError, InvalidSignature):
         print('Error stack updated.')
 
 
