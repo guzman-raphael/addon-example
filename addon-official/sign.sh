@@ -29,8 +29,8 @@
 # gpg --import datajoint-dev.private.key
 
 # generate hash of filename and contents
-# GIT_HASH=$(git ls-files -s mzaddon_type_student | git hash-object --stdin)
-GIT_HASH=bad1c5a7c1b5b39a8d0d87146bc80afd41bd6580
+GIT_HASH=$(git ls-files -s mzaddon_type_student | git hash-object --stdin)
+# GIT_HASH=bad1c5a7c1b5b39a8d0d87146bc80afd41bd6580
 
 # generate signature
 printf $GIT_HASH | openssl dgst -sha256 -sign datajoint-dev.pem -out sign.sha256 -sigopt rsa_padding_mode:pss
