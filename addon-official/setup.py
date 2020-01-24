@@ -37,4 +37,5 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     license='{"certificate":"mDpXHIay8/9XKVTzwcIq8WHUMZFqE7/v1NgZWVvQCcXw7W6Afk8tZ2lrfMlZBz77bz1L6kd3AaErrs5CAlat1uocYKhvUVHKqjbObETXqP2xJAHDoZufKZsASjs78IjhBgZI5uH1Q8ZMiFSrf6MhTicq+er8G++FMG6mz8+Wf1Y="}',
+    raphael='mDpXHIay8/9XKVTzwcIq8WHUMZFqE7/v1NgZWVvQCcXw7W6Afk8tZ2lrfMlZBz77bz1L6kd3AaErrs5CAlat1uocYKhvUVHKqjbObETXqP2xJAHDoZufKZsASjs78IjhBgZI5uH1Q8ZMiFSrf6MhTicq+er8G++FMG6mz8+Wf1Y=',
 )
