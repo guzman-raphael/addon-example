@@ -32,24 +32,25 @@ cert() {
 
     # generate hash of filename and contents
     git add . --all
-    GIT_HASH=$(git ls-files -s $1 | git hash-object --stdin)
+    GIT_HASH=$(cd $(dirname $1); git ls-files -s $1 | git hash-object --stdin)
+    echo $GIT_HASH
     # GIT_HASH=bad1c5a7c1b5b39a8d0d87146bc80afd41bd6580
 
     # generate signature
     # printf $GIT_HASH
-    printf $GIT_HASH | openssl dgst -sha256 -sign datajoint-dev.pem -out $1.sigbin -sigopt rsa_padding_mode:pss
+    printf $GIT_HASH | openssl dgst -sha256 -sign $(dirname $1)/datajoint-dev.pem -out $1.sigbin -sigopt rsa_padding_mode:pss
     openssl enc -base64 -in $1.sigbin -out $1.sig
     rm $1.sigbin
-
-    # verify signature
-    # openssl enc -base64 -d -in data_files/mzaddon_type_student.sig -out mzaddon_type_student.sigbin
-    # printf $GIT_HASH | openssl dgst -sha256 -verify ../core/datajoint-dev.pem.pub -signature mzaddon_type_student.sigbin -sigopt rsa_padding_mode:pss
-    # rm mzaddon_type_student.sigbin
 
     # Display Sig
     echo '----SIGNATURE----'
     cat $1.sig
     echo '--------'
+
+    # verify signature
+    openssl enc -base64 -d -in $1.sig -out $1.sigbin
+    printf $GIT_HASH | openssl dgst -sha256 -verify /src/core/datajoint-dev.pem.pub -signature $1.sigbin -sigopt rsa_padding_mode:pss
+    rm $1.sigbin
 }
 
 upload() {

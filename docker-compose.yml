@@ -26,5 +26,8 @@ services:
         ./pypi_package.sh /src/addon-official;
         # pip install --upgrade --user -i https://test.pypi.org/simple mzaddon_type_student;
         # pip uninstall -y mzaddon_type_student;
+        ./pypi_package.sh /src/setup-extension;
+        # pip install --upgrade --user -i https://test.pypi.org/simple maz-metadata;
+        # pip uninstall -y maz-metadata;
       "
       

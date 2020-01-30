@@ -1,8 +1,6 @@
 import pkg_resources
 import hashlib
 from pathlib import Path
-# import os
-# from stat import ST_MODE
 from cryptography.exceptions import InvalidSignature
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.serialization import load_pem_public_key
@@ -24,8 +22,8 @@ WTT5kCgF5QAe5JN8WQIDAQAB
 
 discovered_plugins = {	
     entry_point.module_name: entry_point.name
-    for entry_point	
-    in pkg_resources.iter_entry_points('maz.plugins')	
+    for entry_point
+    in pkg_resources.iter_entry_points('maz.plugins')
 }
 print(discovered_plugins)
 
@@ -57,8 +55,11 @@ def update_error_stack(module):
         #     signature = f.read()
 
         # License approach
-        metadata = dict(re.findall(r'([a-zA-Z0-9\-]+): (.*?)\n', pkg.get_metadata(pkg.PKG_INFO)))
-        signature = json.loads(metadata['License'])['certificate']
+        # metadata = dict(re.findall(r'([a-zA-Z0-9\-]+): (.*?)\n', pkg.get_metadata(pkg.PKG_INFO)))
+        # signature = json.loads(metadata['License'])['certificate']
+
+        # Custom meta approach
+        signature = pkg.get_metadata('{}.sig'.format(module.__name__))
 
         pub_key = load_pem_public_key(bytes(DJ_PUB_KEY, 'UTF-8'), backend=default_backend())
         data = hash_dir(module.__path__[0])

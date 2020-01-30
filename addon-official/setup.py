@@ -18,14 +18,18 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/guzman-raphael/addon-example",
-    entry_points={'maz.plugins': 'type = {}'.format(pkg_name)},
     packages=setuptools.find_packages(),
-    # package_data={pkg_name: ['../{pkg}_data/{pkg}.sig'.format(pkg=pkg_name)]},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    license='{"certificate":"s6kIfnzrD5DkGkkYXXcJLA0klnavt1ts8j6b+tVHZkLo1kHsNMbm3ZSfL85bAc0/quTjBFd7Z3Xqlav/4lGnP7OV98xn/xNHfEFHbgi1mJ2OIBgYZMvQ1fahtV22HKD4x2ca6MI7/B2mE55e4JRksMEtAYjYVn2DJtjdfjA04Hs="}',
-    raphael='s6kIfnzrD5DkGkkYXXcJLA0klnavt1ts8j6b+tVHZkLo1kHsNMbm3ZSfL85bAc0/quTjBFd7Z3Xqlav/4lGnP7OV98xn/xNHfEFHbgi1mJ2OIBgYZMvQ1fahtV22HKD4x2ca6MI7/B2mE55e4JRksMEtAYjYVn2DJtjdfjA04Hs=',
+    setup_requires = ['maz_metadata'],
+    maz_cert='/src/addon-official/datajoint-dev.pem',
+    entry_points={
+        'maz.plugins': 'type = {}'.format(pkg_name)
+    },
+    # package_data={pkg_name: ['../{pkg}_data/{pkg}.sig'.format(pkg=pkg_name)]},
+    # license='{"certificate":"DmK1aUc5jvBcaQpdOrcZhF0LmIfnYRqHsSCKjbgDAq0WMZ0HHxoSaDoiK/b7icpJ3kGMIpOdXxd7Sk7wD0WuJKzbLYOvXts6b6k8YYsG3A//HtbnFVNvB1w/PaCpWeu1obWhhQDdfAsihAicR9LxBuY9qweEaq9PLl9f0f72Dc0="}',
+    # raphael='DmK1aUc5jvBcaQpdOrcZhF0LmIfnYRqHsSCKjbgDAq0WMZ0HHxoSaDoiK/b7icpJ3kGMIpOdXxd7Sk7wD0WuJKzbLYOvXts6b6k8YYsG3A//HtbnFVNvB1w/PaCpWeu1obWhhQDdfAsihAicR9LxBuY9qweEaq9PLl9f0f72Dc0=',
 )
