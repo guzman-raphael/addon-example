@@ -25,7 +25,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     setup_requires = ['maz_metadata'],
-    maz_cert='/src/addon-official/datajoint-dev.pem',
+    maz_privkey_path='/src/addon-official/datajoint-dev.pem',
     entry_points={
         'maz.plugins': 'type = {}'.format(pkg_name)
     },

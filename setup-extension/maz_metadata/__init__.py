@@ -10,7 +10,7 @@ from cryptography.hazmat.primitives import hashes
 import base64
 # from setuptools import Command
 
-__version__ = "0.2.2"
+__version__ = "0.2.4"
 
 def assert_string(dist, attr, value):
     """Verify that value is a string list"""
@@ -36,9 +36,12 @@ def write_arg(cmd, basename, filename, force=False):
     # print(arg_value)
     # print(hash_pkg(str(Path(filename).parents[0]).split('.')[0]))
     # print(sign(arg_value, hash_pkg(str(Path(filename).parents[0]).split('.')[0])))
-    write_value = sign(arg_value, hash_pkg(str(Path(filename).parents[0]).split('.')[0]))
     # write_value = "raphael"
-    cmd.write_or_delete_file(argname, filename, write_value, force)
+    if arg_value is not None:
+        write_value = sign(arg_value, hash_pkg(str(Path(filename).parents[0]).split('.')[0]))
+        # write_filename = filename
+        write_filename = '{}/maz.sig'.format(str(Path(filename).parents[0]))
+        cmd.write_or_delete_file(argname, write_filename, write_value, force)
 
 def sign(privkey_path, data):
     with open(privkey_path, "rb") as key_file:

@@ -10,6 +10,7 @@ import base64
 import re
 import json
 from json.decoder import JSONDecodeError
+import os
 
 DJ_PUB_KEY = '''
 -----BEGIN PUBLIC KEY-----
@@ -27,22 +28,34 @@ discovered_plugins = {
 }
 print(discovered_plugins)
 
-def hash_dir(dirpath):
-    ref = Path(dirpath).parents[0]
-    paths = sorted(Path(dirpath).glob('*'))
+def hash_pkg(pkgpath):
+    ref = Path(pkgpath).absolute().parents[0]
     details = ''
+    details = update_details_dir(pkgpath, ref, details)
+    return hashlib.sha1('blob {}\0{}'.format(len(details), details).encode()).hexdigest()
+ 
+def update_details_dir(dirpath, ref, details):
+    paths = sorted(Path(dirpath).absolute().glob('*'))
     # walk a directory to collect info
     for path in paths:
         if 'pycache' not in str(path):
-            with open(str(path), 'r') as f:
-                data = f.read()
-                # mode = oct(os.stat(str(path))[ST_MODE])[2:]
-                mode = 100644
-                hash = hashlib.sha1('blob {}\0{}'.format(len(data),data).encode()).hexdigest()
-                stage_no = 0
-                relative_path = str(path.relative_to(ref))
-                details = '{}{} {} {}\t{}\n'.format(details, mode, hash, stage_no, relative_path)
-    return hashlib.sha1('blob {}\0{}'.format(len(details), details).encode()).hexdigest()
+            if os.path.isdir(str(path)):
+                details = update_details_dir(path, ref, details)
+            else:
+                details = update_details_file(path, ref, details)
+    return details
+
+def update_details_file(filepath, ref, details):
+    if '.sig' not in str(filepath):
+        with open(str(filepath), 'r') as f:
+            data = f.read()
+        # mode = oct(os.stat(str(filepath))[ST_MODE])[2:]
+        mode = 100644
+        hash = hashlib.sha1('blob {}\0{}'.format(len(data),data).encode()).hexdigest()
+        stage_no = 0
+        relative_path = str(filepath.relative_to(ref))
+        details = '{}{} {} {}\t{}\n'.format(details, mode, hash, stage_no, relative_path)
+    return details
 
 def update_error_stack(module):
     
@@ -59,10 +72,11 @@ def update_error_stack(module):
         # signature = json.loads(metadata['License'])['certificate']
 
         # Custom meta approach
-        signature = pkg.get_metadata('{}.sig'.format(module.__name__))
+        # signature = pkg.get_metadata('{}.sig'.format(module.__name__))
+        signature = pkg.get_metadata('maz.sig')
 
         pub_key = load_pem_public_key(bytes(DJ_PUB_KEY, 'UTF-8'), backend=default_backend())
-        data = hash_dir(module.__path__[0])
+        data = hash_pkg(module.__path__[0])
         pub_key.verify(base64.b64decode(signature.encode()), data.encode(), padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH), hashes.SHA256())
         print('Cert verified.')
     except (FileNotFoundError, JSONDecodeError, InvalidSignature):

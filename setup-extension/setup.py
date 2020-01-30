@@ -26,11 +26,11 @@ setuptools.setup(
     ],
     entry_points={
         "distutils.setup_keywords": [
-            "maz_cert = maz_metadata:assert_string",
+            "maz_privkey_path = maz_metadata:assert_string",
             # "maz_cert = setuptools.dist:assert_string_list",
         ],
         "egg_info.writers": [
-            "maz_cert.sig = maz_metadata:write_arg",
+            "maz_privkey_path.sig = maz_metadata:write_arg",
             # "maz_cert.sig = setuptools.command.egg_info:write_arg",
         ],
     },
